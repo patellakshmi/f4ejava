@@ -24,6 +24,8 @@ import pgoc.f4e.configs.helper.AuthorizationFilter;
 import pgoc.f4e.configs.helper.MyFilter;
 import pgoc.f4e.constants.APIConstant;
 
+import java.util.Arrays;
+
 
 @EnableAutoConfiguration
 @EnableWebSecurity
@@ -52,12 +54,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, APIConstant.LOGIN).permitAll()
                 .antMatchers(HttpMethod.POST, APIConstant.SIGNUP).permitAll()
+                .antMatchers(HttpMethod.OPTIONS, APIConstant.PUBLIC+"/*").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, APIConstant.PRIVATE+"/*").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilter(new AuthenticationFilter(authenticationManager()))
                 .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        httpSecurity.cors();
+        httpSecurity.cors().disable();
     }
 
 
@@ -68,8 +72,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS","PATCH"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
@@ -78,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
