@@ -9,5 +9,5 @@ public class APIConstant {
 
     //private API
     public static final String PRIVATE="/f4e/private";
-    public static final String TEST= PRIVATE+"/v1/test";
+    public static final String TEST= PUBLIC+"/v1/test";
 }

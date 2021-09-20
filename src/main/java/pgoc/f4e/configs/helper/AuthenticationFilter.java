@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pgoc.f4e.constants.APIConstant;
@@ -36,8 +35,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            pgoc.f4e.models.User creds = new ObjectMapper().readValue(request.getInputStream(), pgoc.f4e.models.User.class);
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword(), new ArrayList<>()));
+            pgoc.f4e.pojos.common.User user = new ObjectMapper().readValue(request.getInputStream(), pgoc.f4e.pojos.common.User.class);
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), new ArrayList<>()));
             return authentication;
         } catch (IOException e) {
             throw new RuntimeException("Could not read request" + e);
