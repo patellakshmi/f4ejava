@@ -35,8 +35,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            pgoc.f4e.pojos.common.User user = new ObjectMapper().readValue(request.getInputStream(), pgoc.f4e.pojos.common.User.class);
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), new ArrayList<>()));
+            AuthUser authUser = new ObjectMapper().readValue(request.getInputStream(), AuthUser.class);
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authUser.getUsername(), authUser.getPassword(), new ArrayList<>()));
             return authentication;
         } catch (IOException e) {
             throw new RuntimeException("Could not read request" + e);

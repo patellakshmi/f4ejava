@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import pgoc.f4e.models.PotentialUser;
 import pgoc.f4e.models.ProminentUser;
-import pgoc.f4e.pojos.common.User;
 import pgoc.f4e.repositories.PotentialUserRepo;
 import pgoc.f4e.repositories.ProminentUserRepo;
 
@@ -31,11 +30,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         PotentialUser potentialUser = potentialUserRepo.findByAnyOfUniqueField(username);
         ProminentUser prominentUser = prominentUserRepo.findByAnyOfUniqueField(username);
 
-        User user = User.getUser(username, potentialUser, prominentUser);
+        AuthUser authUser = AuthUser.getUser(username, potentialUser, prominentUser);
 
-        if (user == null) {
+        if (authUser == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.emptyList());
+        return new org.springframework.security.core.userdetails.User(authUser.getUsername(), authUser.getPassword(), Collections.emptyList());
     }
 }

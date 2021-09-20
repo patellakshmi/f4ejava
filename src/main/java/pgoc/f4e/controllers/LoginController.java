@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pgoc.f4e.configs.helper.AuthUser;
 import pgoc.f4e.constants.APIConstant;
 import pgoc.f4e.models.PotentialUser;
-import pgoc.f4e.pojos.common.User;
 import pgoc.f4e.pojos.responses.GenericResponse;
 import pgoc.f4e.repositories.PotentialUserRepo;
 import pgoc.f4e.utility.AuthUtility;
@@ -36,27 +36,27 @@ public class LoginController {
     }
 
     @PostMapping(APIConstant.SIGNUP)
-    public ResponseEntity<GenericResponse> signUp(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws ServletException, JSONException, IOException {
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        PotentialUser existingUser = potentialUserRepo.findByAnyOfUniqueField(user.getUsername());
+    public ResponseEntity<GenericResponse> signUp(@RequestBody AuthUser authUser, HttpServletRequest request, HttpServletResponse response) throws ServletException, JSONException, IOException {
+        authUser.setPassword(this.passwordEncoder.encode(authUser.getPassword()));
+        PotentialUser existingUser = potentialUserRepo.findByAnyOfUniqueField(authUser.getUsername());
         if( existingUser != null){
             return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "DONE"), HttpStatus.FOUND);
         }
-        PotentialUser potentialUser = PotentialUser.builder().userId(user.getUsername()).password(user.getPassword()).build();
+        PotentialUser potentialUser = PotentialUser.builder().userId(authUser.getUsername()).password(authUser.getPassword()).build();
         potentialUserRepo.save(potentialUser);
-        AuthUtility.aadAuthHeader(request, response, user);
+        AuthUtility.aadAuthHeader(request, response, authUser);
         return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "DONE"), HttpStatus.OK);
     }
 
 
     @Trace
     @PostMapping(APIConstant.LOGIN)
-    public ResponseEntity<GenericResponse> login(@RequestBody User user) throws IOException {
+    public ResponseEntity<GenericResponse> login(@RequestBody AuthUser authUser) throws IOException {
         return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "DONE"), HttpStatus.OK);
     }
 
     @PostMapping(APIConstant.TEST)
-    public ResponseEntity<GenericResponse> test(@RequestBody User user){
+    public ResponseEntity<GenericResponse> test(@RequestBody AuthUser authUser){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String principal = authentication.getPrincipal().toString();
         return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "DONE",
