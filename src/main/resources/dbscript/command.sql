@@ -7,9 +7,9 @@ CREATE TABLE potential_user
     mobile varchar (32) NULL UNIQUE,
     type varchar(32),
     password varchar(512),
-    enable boolean default true,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    enable tinyint(1) DEFAULT 1 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 
 );
 
@@ -22,9 +22,9 @@ CREATE TABLE prominent_user
     mobile varchar (32) NULL UNIQUE,
     type varchar(32),
     password varchar(512),
-    enable boolean default true,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    enable tinyint(1) DEFAULT 1 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 
 );
 

@@ -42,7 +42,7 @@ public class LoginController {
         if( existingUser != null){
             return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "DONE"), HttpStatus.FOUND);
         }
-        PotentialUser potentialUser = PotentialUser.builder().userId(authUser.getUsername()).password(authUser.getPassword()).build();
+        PotentialUser potentialUser = new PotentialUser(authUser.getUsername(), authUser.getPassword());
         potentialUserRepo.save(potentialUser);
         AuthUtility.aadAuthHeader(request, response, authUser);
         return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "DONE"), HttpStatus.OK);

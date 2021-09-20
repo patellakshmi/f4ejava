@@ -43,4 +43,13 @@ public class PotentialUser {
     @Column(name="updated_at")
     private Timestamp updatedAt;
 
+    public PotentialUser(String userId, String password){
+        this.userId = userId;
+        this.password = password;
+        this.enable = true;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
+    }
+
+
 }
