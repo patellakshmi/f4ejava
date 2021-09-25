@@ -28,6 +28,209 @@ CREATE TABLE prominent_user
 
 );
 
+CREATE TABLE course
+(
+    id varchar(32) NOT NULL PRIMARY KEY,
+    title varchar(64)  NULL,
+    fee DECIMAL (10,2) NULL,
+    currency varchar(32),
+    off DECIMAL (10,2),
+    off_keyword varchar(16) NULL,
+    stream_std varchar(32) NULL,
+    duration INT NULL ,
+    duration_unit varchar(14) NULL,
+    mode varchar(32) NULL,
+    image_url varchar(512) NULL,
+    description varchar(32) NULL,
+    benefit varchar(218) NULL,
+    enable tinyint(1) DEFAULT 0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+
+);
+
+
+CREATE TABLE platform_detail
+(
+    id INT AUTO_INCREMENT NOT NULL,
+    name varchar(64)  NULL,
+    image_url varchar(512) NULL,
+    enable tinyint(1) default  0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    course_id varchar(32),
+    PRIMARY KEY(id),
+    FOREIGN KEY (course_id) REFERENCES course(id)
+);
+
+
+CREATE TABLE teacher
+(
+    id varchar(32) NOT NULL,
+    name varchar(64)  NULL,
+    subject varchar(512) NULL,
+    address varchar(512) NULL,
+    phone varchar(32) DEFAULT NULL,
+    email varchar(32) DEFAULT NULL,
+    degree varchar(32) DEFAULT NULL,
+    status varchar(32) DEFAULT NULL,
+    enable tinyint(1) default  0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id)
+);
+
+
+
+CREATE TABLE batch
+(
+    id varchar(32) NOT NULL,
+    course_id varchar(32) NOT NULL,
+    name varchar(64) NULL,
+    mode varchar(64) NULL,
+    address varchar(128) NULL,
+    latitude float DEFAULT NULL,
+    longitude float DEFAULT NULL,
+    duration int DEFAULT NULL,
+    duration_unit varchar(16) DEFAULT NULL,
+    started_at date default NULL,
+    status varchar(32) DEFAULT NULL,
+    enable tinyint(1) default  1 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (course_id) REFERENCES course(id)
+);
+
+CREATE TABLE subject
+(
+    id varchar(32) NOT NULL,
+    name varchar(64)  NULL,
+    description varchar(512) NULL,
+    stream_std varchar(64) DEFAULT NULL,
+    year int DEFAULT NULL,
+    enable tinyint(1) default  0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    course_id varchar(32),
+    FOREIGN KEY (course_id) REFERENCES course(id),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE subject_part
+(
+    id varchar(32) NOT NULL,
+    name varchar(64)  NULL,
+    description varchar(512) NULL,
+    sub_id varchar(32),
+    enable tinyint(1) default  0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (sub_id) REFERENCES subject(id)
+);
+
+
+CREATE TABLE combo_timeslot
+(
+    id int NOT NULL AUTO_INCREMENT,
+    batch_id varchar(32) NOT NULL ,
+    enable tinyint(1) default  1 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (batch_id) REFERENCES batch(id)
+);
+
+
+CREATE TABLE timeslot
+(
+    id int NOT NULL AUTO_INCREMENT,
+    start_at TIME,
+    end_at TIME,
+    subject_part_id varchar(32) DEFAULT NULL,
+    combo_timeslot_id int DEFAULT NULL,
+    enable tinyint(1) default 1 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (combo_timeslot_id) REFERENCES combo_timeslot(id),
+    FOREIGN KEY (subject_part_id) REFERENCES subject_part(id)
+);
+
+
+CREATE TABLE timetable
+(
+    id int NOT NULL AUTO_INCREMENT,
+    week_num int NOT NULL,
+    batch_id varchar(64) NULL,
+    month int NULL,
+    day_of_month int NULL,
+    sunday int DEFAULT NULL,
+    monday int DEFAULT NULL,
+    tuesday int DEFAULT NULL,
+    wednesday int DEFAULT NULL,
+    thursday int default NULL,
+    friday int DEFAULT NULL,
+    saturday int DEFAULT NULL,
+    enable tinyint(1) default  1 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (batch_id) REFERENCES batch(id),
+    UNIQUE KEY (batch_id, week_num),
+    FOREIGN KEY (sunday) REFERENCES combo_timeslot(id),
+    FOREIGN KEY (monday) REFERENCES combo_timeslot(id),
+    FOREIGN KEY (tuesday) REFERENCES combo_timeslot(id),
+    FOREIGN KEY (wednesday) REFERENCES combo_timeslot(id),
+    FOREIGN KEY (thursday) REFERENCES combo_timeslot(id),
+    FOREIGN KEY (friday) REFERENCES combo_timeslot(id),
+    FOREIGN KEY (saturday) REFERENCES combo_timeslot(id)
+);
+
+CREATE TABLE teacher_batch_subject_part
+(
+    teacher_id varchar(32) NOT NULL,
+    batch_id varchar(64) NOT NULL,
+    subject_part_id varchar(64) NOT NULL,
+    enable tinyint(1) default  0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY (teacher_id, subject_part_id,batch_id)
+);
+
+
+CREATE TABLE teacher_timetable
+(
+    id int NOT NULL AUTO_INCREMENT,
+    week_num int NOT NULL,
+    batch_id varchar(64) NULL,
+    subject_part_id varchar(64) NULL,
+    month int NULL,
+    day_of_month int NULL,
+    sunday varchar(32)  DEFAULT NULL,
+    monday varchar(32)  DEFAULT NULL,
+    tuesday varchar(32)  DEFAULT NULL,
+    wednesday varchar(32)  DEFAULT NULL,
+    thursday varchar(32)  default NULL,
+    friday varchar(32)  DEFAULT NULL,
+    saturday varchar(32)  DEFAULT NULL,
+    enable tinyint(1) default  1 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (batch_id) REFERENCES batch(id),
+    FOREIGN KEY (subject_part_id) REFERENCES subject_part(id),
+    UNIQUE KEY (batch_id, week_num,subject_part_id),
+    FOREIGN KEY (sunday) REFERENCES teacher(id),
+    FOREIGN KEY (monday) REFERENCES teacher(id),
+    FOREIGN KEY (tuesday) REFERENCES teacher(id),
+    FOREIGN KEY (wednesday) REFERENCES teacher(id),
+    FOREIGN KEY (thursday) REFERENCES teacher(id),
+    FOREIGN KEY (friday) REFERENCES teacher(id),
+    FOREIGN KEY (saturday) REFERENCES teacher(id)
+);
+
 
 
 

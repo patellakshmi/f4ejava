@@ -7,6 +7,6 @@ import pgoc.f4e.models.PotentialUser;
 
 @Repository
 public interface PotentialUserRepo extends JpaRepository<PotentialUser, String> {
-    @Query("select u from PotentialUser u where u.userId = ?1")
+    @Query("select u from PotentialUser u where u.userName = ?1 or u.userId = ?1 or u.email = ?1 or mobile = ?1")
     PotentialUser findByAnyOfUniqueField(String value);
 }
