@@ -1,3 +1,6 @@
+drop database f4e;
+create database f4e;
+use f4e;
 
 CREATE TABLE potential_user
 (
@@ -31,7 +34,7 @@ CREATE TABLE prominent_user
 CREATE TABLE course
 (
     id varchar(32) NOT NULL PRIMARY KEY,
-    title varchar(64)  NULL,
+    name varchar(64)  NULL,
     fee DECIMAL (10,2) NULL,
     currency varchar(32),
     off DECIMAL (10,2),
@@ -50,11 +53,23 @@ CREATE TABLE course
 );
 
 
+CREATE TABLE course_platform
+(
+    id INT AUTO_INCREMENT NOT NULL,
+    name varchar(64)  NULL,
+    image_url varchar(512) NULL,
+    enable tinyint(1) default  0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id)
+);
+
 CREATE TABLE platform_detail
 (
     id INT AUTO_INCREMENT NOT NULL,
     name varchar(64)  NULL,
     image_url varchar(512) NULL,
+    course_url varchar(512) NULL,
     enable tinyint(1) default  0 NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -85,7 +100,7 @@ CREATE TABLE teacher
 CREATE TABLE batch
 (
     id varchar(32) NOT NULL,
-    course_id varchar(32) NOT NULL,
+    course_id varchar(32),
     name varchar(64) NULL,
     mode varchar(64) NULL,
     address varchar(128) NULL,
@@ -134,7 +149,7 @@ CREATE TABLE subject_part
 CREATE TABLE combo_timeslot
 (
     id int NOT NULL AUTO_INCREMENT,
-    batch_id varchar(32) NOT NULL ,
+    batch_id varchar(32),
     enable tinyint(1) default  1 NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -148,8 +163,8 @@ CREATE TABLE timeslot
     id int NOT NULL AUTO_INCREMENT,
     start_at TIME,
     end_at TIME,
-    subject_part_id varchar(32) DEFAULT NULL,
-    combo_timeslot_id int DEFAULT NULL,
+    subject_part_id varchar(32) default NULL,
+    combo_timeslot_id int default NULL,
     enable tinyint(1) default 1 NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -166,13 +181,13 @@ CREATE TABLE timetable
     batch_id varchar(64) NULL,
     month int NULL,
     day_of_month int NULL,
-    sunday int DEFAULT NULL,
-    monday int DEFAULT NULL,
-    tuesday int DEFAULT NULL,
-    wednesday int DEFAULT NULL,
-    thursday int default NULL,
-    friday int DEFAULT NULL,
-    saturday int DEFAULT NULL,
+    sunday int,
+    monday int,
+    tuesday int,
+    wednesday int,
+    thursday int,
+    friday int,
+    saturday int,
     enable tinyint(1) default  1 NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -200,21 +215,21 @@ CREATE TABLE teacher_batch_subject_part
 );
 
 
-CREATE TABLE teacher_timetable
+CREATE TABLE teacher_allocation
 (
     id int NOT NULL AUTO_INCREMENT,
     week_num int NOT NULL,
-    batch_id varchar(64) NULL,
-    subject_part_id varchar(64) NULL,
+    batch_id varchar(64),
+    subject_part_id varchar(64),
     month int NULL,
     day_of_month int NULL,
-    sunday varchar(32)  DEFAULT NULL,
-    monday varchar(32)  DEFAULT NULL,
-    tuesday varchar(32)  DEFAULT NULL,
-    wednesday varchar(32)  DEFAULT NULL,
-    thursday varchar(32)  default NULL,
-    friday varchar(32)  DEFAULT NULL,
-    saturday varchar(32)  DEFAULT NULL,
+    sunday varchar(32),
+    monday varchar(32),
+    tuesday varchar(32),
+    wednesday varchar(32),
+    thursday varchar(32),
+    friday varchar(32),
+    saturday varchar(32),
     enable tinyint(1) default  1 NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -230,8 +245,6 @@ CREATE TABLE teacher_timetable
     FOREIGN KEY (friday) REFERENCES teacher(id),
     FOREIGN KEY (saturday) REFERENCES teacher(id)
 );
-
-
 
 
 CREATE USER 'web'@'localhost' IDENTIFIED WITH mysql_native_password BY 'web@f4e';

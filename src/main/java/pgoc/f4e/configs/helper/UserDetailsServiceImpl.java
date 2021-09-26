@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import pgoc.f4e.models.PotentialUser;
 import pgoc.f4e.models.ProminentUser;
-import pgoc.f4e.repositories.PotentialUserRepo;
-import pgoc.f4e.repositories.ProminentUserRepo;
+import pgoc.f4e.repositories.PotentialUserRepository;
+import pgoc.f4e.repositories.ProminentUserRepository;
 
 import java.util.Collections;
 
@@ -16,19 +16,19 @@ import java.util.Collections;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private PotentialUserRepo potentialUserRepo;
-    private ProminentUserRepo prominentUserRepo;
+    private PotentialUserRepository potentialUserRepository;
+    private ProminentUserRepository prominentUserRepository;
 
-    public UserDetailsServiceImpl(PotentialUserRepo potentialUserRepo, ProminentUserRepo prominentUserRepo) {
-        this.potentialUserRepo = potentialUserRepo;
-        this.prominentUserRepo = prominentUserRepo;
+    public UserDetailsServiceImpl(PotentialUserRepository potentialUserRepository, ProminentUserRepository prominentUserRepository) {
+        this.potentialUserRepository = potentialUserRepository;
+        this.prominentUserRepository = prominentUserRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        PotentialUser potentialUser = potentialUserRepo.findByAnyOfUniqueField(username);
-        ProminentUser prominentUser = prominentUserRepo.findByAnyOfUniqueField(username);
+        PotentialUser potentialUser = potentialUserRepository.findByAnyOfUniqueField(username);
+        ProminentUser prominentUser = prominentUserRepository.findByAnyOfUniqueField(username);
 
         AuthUser authUser = AuthUser.getUser(username, potentialUser, prominentUser);
 

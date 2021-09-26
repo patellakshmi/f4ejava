@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/configuration/ui",
             "/configuration/security",
             "/swagger-ui.html",
-            "/webjars/**"
+            "/webjars/**",
+            "/f4e/public/**"
     };
 
     public SecurityConfig(UserDetailsService userDetailsService) {
@@ -50,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, APIConstant.LOGIN).permitAll()
                 .antMatchers(HttpMethod.POST, APIConstant.SIGNUP).permitAll()
+                .antMatchers(APIConstant.PUBLIC+"/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, APIConstant.PUBLIC+"/*").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, APIConstant.PRIVATE+"/*").permitAll()
                 .anyRequest().authenticated()

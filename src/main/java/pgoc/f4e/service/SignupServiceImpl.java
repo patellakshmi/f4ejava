@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import pgoc.f4e.configs.helper.AuthUser;
 import pgoc.f4e.models.PotentialUser;
 import pgoc.f4e.pojos.responses.GenericResponse;
-import pgoc.f4e.repositories.PotentialUserRepo;
+import pgoc.f4e.repositories.PotentialUserRepository;
 import pgoc.f4e.utility.AuthUtility;
 import pgoc.f4e.utility.IdGenerator;
 import pgoc.f4e.utility.SignupValidator;
@@ -23,7 +23,7 @@ import java.io.IOException;
 public class SignupServiceImpl implements SignupService{
 
     @Autowired
-    private PotentialUserRepo potentialUserRepo;
+    private PotentialUserRepository potentialUserRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -40,15 +40,15 @@ public class SignupServiceImpl implements SignupService{
         PotentialUser existingUser = null;
         do{
             uniqueId = IdGenerator.getUniqueId();
-            existingUser = potentialUserRepo.findByAnyOfUniqueField(uniqueId);
+            existingUser = potentialUserRepository.findByAnyOfUniqueField(uniqueId);
         }while (existingUser != null);
 
-        PotentialUser existingUser1 = potentialUserRepo.findByAnyOfUniqueField(authUser.getUsername());
+        PotentialUser existingUser1 = potentialUserRepository.findByAnyOfUniqueField(authUser.getUsername());
         if( existingUser1 != null){
             return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "Please use different user-name"), HttpStatus.FOUND);
         }
         PotentialUser potentialUser = new PotentialUser( uniqueId,  authUser.getUsername(), authUser.getPassword());
-        potentialUserRepo.save(potentialUser);
+        potentialUserRepository.save(potentialUser);
         AuthUtility.aadAuthHeader(request, response, authUser);
         return new ResponseEntity<GenericResponse>(new GenericResponse("SUCCESS", "Thanks for signup!"), HttpStatus.OK);
 

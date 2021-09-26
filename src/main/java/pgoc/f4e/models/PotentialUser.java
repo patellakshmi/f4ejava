@@ -11,8 +11,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="potential_user")
 @Data
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
