@@ -53,8 +53,8 @@ public class Subject {
     private Set<SubjectPart> subjectParts;
 
     public Subject(SubjectRequest subjectRequest){
-        this.id = subjectRequest.getCourse_id()+subjectRequest.getId();
-        this.course_id = subjectRequest.getCourse_id();
+        this.id = subjectRequest.getCourseId()+subjectRequest.getId();
+        this.course_id = subjectRequest.getCourseId();
         this.name = subjectRequest.getName();
         this.streamStd = subjectRequest.getStreamStd();
         this.year = subjectRequest.getYear();

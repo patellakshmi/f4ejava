@@ -31,14 +31,33 @@ CREATE TABLE prominent_user
 
 );
 
+CREATE TABLE slider_image
+(
+    id varchar(32) NOT NULL,
+    name varchar(64)  NULL,
+    description varchar(128)  NULL,
+    image_url varchar(512) NULL,
+    rank INT NULL ,
+    enable tinyint(1) default  0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+);
+
+
+
 CREATE TABLE course
 (
     id varchar(32) NOT NULL PRIMARY KEY,
     name varchar(64)  NULL,
+    head varchar(64)  NULL,
+    head_email varchar(64)  NULL,
+    head_phone varchar(64)  NULL,
     fee DECIMAL (10,2) NULL,
     currency varchar(32),
     off DECIMAL (10,2),
     off_keyword varchar(16) NULL,
+    off_mode varchar(16) NULL,
     stream_std varchar(32) NULL,
     duration INT NULL ,
     duration_unit varchar(14) NULL,
@@ -75,7 +94,8 @@ CREATE TABLE platform_detail
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     course_id varchar(32),
     PRIMARY KEY(id),
-    FOREIGN KEY (course_id) REFERENCES course(id)
+    FOREIGN KEY (course_id) REFERENCES course(id),
+    UNIQUE KEY(course_id, name )
 );
 
 

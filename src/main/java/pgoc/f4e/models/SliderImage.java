@@ -4,19 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pgoc.f4e.pojos.requests.PlatformDetailRequest;
+import pgoc.f4e.pojos.requests.SliderImageRequest;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="platform_detail")
+@Table(name="slider_image")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PlatformDetail {
-
+public class SliderImage {
     @Id
     @Column(unique=true, name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +24,14 @@ public class PlatformDetail {
     @Column(name="name")
     private String name;
 
+    @Column(name="description")
+    private String description;
+
     @Column(name="image_url")
     private String imageUrl;
 
-    @Column(name="course_url")
-    private String courseUrl;
+    @Column(name="rank")
+    private Long rank;
 
     @Column(name="enable")
     private boolean enable;
@@ -40,15 +42,12 @@ public class PlatformDetail {
     @Column(name="updated_at")
     private Timestamp updatedAt;
 
-    @Column(name="course_id")
-    private String courseId;
-
-    public PlatformDetail(PlatformDetailRequest platformDetailRequest){
-        this.name = platformDetailRequest.getName();
-        this.imageUrl = platformDetailRequest.getImageUrl();
-        this.courseUrl = platformDetailRequest.getCourseUrl();
-        this.enable = platformDetailRequest.isEnable();
-        this.courseId = platformDetailRequest.getCourseId();
+    public SliderImage(SliderImageRequest sliderImageRequest){
+        this.name = sliderImageRequest.getName();
+        this.description = sliderImageRequest.getDescription();
+        this.imageUrl = sliderImageRequest.getImageUrl();
+        this.rank = sliderImageRequest.getRank();
+        this.enable = sliderImageRequest.isEnable();
         this.createdAt = new Timestamp(System.currentTimeMillis());
         this.updatedAt = new Timestamp(System.currentTimeMillis());
     }

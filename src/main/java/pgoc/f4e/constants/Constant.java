@@ -7,6 +7,9 @@ public class Constant {
     public static final String COURSE_CREATED= "Course has been created successfully";
     public static final String SUCCESSFULLY_DELETE_COURSE = "Course deleted successfully";
     public static final String SUBJECT_CREATED = "Subject has been created successfully";
+    public static final String PLATFORM_DETAIL_CREATED = "Platform detail has been created successfully";
+    public static final String PLATFORM_DETAIL_DELETED = "Platform detail has been deleted successfully";
+    public static final String SLIDER_CREATED= "Slider image has been created successfully";
 
 
 

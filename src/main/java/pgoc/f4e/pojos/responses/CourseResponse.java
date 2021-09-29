@@ -14,7 +14,7 @@ import org.codehaus.jackson.annotate.JsonPropertyOrder;
 @AllArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"id","name","fee","currency","off","off_keyword","streamStd","duration","durationUnit","mode"
+@JsonPropertyOrder({"id","name","fee","currency","off","offKeyword","streamStd","duration","durationUnit","mode"
         ,"imageUrl","description","benefit","enable"})
 public class CourseResponse {
 
@@ -23,6 +23,15 @@ public class CourseResponse {
 
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("head")
+    private String head;
+
+    @JsonProperty("headEmail")
+    private String headEmail;
+
+    @JsonProperty("headPhone")
+    private String headPhone;
 
     @JsonProperty("fee")
     private Double fee;
@@ -33,8 +42,11 @@ public class CourseResponse {
     @JsonProperty("off")
     private Double off;
 
-    @JsonProperty("off_keyword")
-    private String off_keyword;
+    @JsonProperty("offKeyword")
+    private String offKeyword;
+
+    @JsonProperty("offMode")
+    private String offMode;
 
     @JsonProperty("streamStd")
     private String streamStd;

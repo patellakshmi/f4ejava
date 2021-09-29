@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public interface CourseService {
+    ResponseEntity<GenericResponse> getCourse();
     ResponseEntity<GenericResponse> createCourse(CourseRequest courseRequest);
     ResponseEntity<GenericResponse> deleteCourse(String courseId);
     ResponseEntity<GenericResponse> addPlatformDetail(PlatformDetailRequest platformDetailRequest);

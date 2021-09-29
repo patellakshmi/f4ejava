@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
+import javax.persistence.Column;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@JsonPropertyOrder({"id","name","fee","currency","off","off_keyword","streamStd","duration","durationUnit","mode"
-,"imageUrl","description","benefit","enable"})
+@JsonPropertyOrder({"id","name","fee","currency","off","offKeyword","streamStd","duration","durationUnit",
+"mode","imageUrl","description","benefit","enable"})
 public class CourseRequest {
 
     @JsonProperty("id")
@@ -20,6 +22,15 @@ public class CourseRequest {
 
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("head")
+    private String head;
+
+    @JsonProperty("headEmail")
+    private String headEmail;
+
+    @JsonProperty("headPhone")
+    private String headPhone;
 
     @JsonProperty("fee")
     private Double fee;
@@ -30,8 +41,11 @@ public class CourseRequest {
     @JsonProperty("off")
     private Double off;
 
-    @JsonProperty("off_keyword")
-    private String off_keyword;
+    @JsonProperty("offKeyword")
+    private String offKeyword;
+
+    @JsonProperty("offMode")
+    private String offMode;
 
     @JsonProperty("streamStd")
     private String streamStd;

@@ -25,6 +25,12 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
+
+    @GetMapping(APIConstant.CREATE_COURSE)
+    public ResponseEntity<GenericResponse> createCourse(){
+        return courseService.getCourse();
+    }
+
     @PostMapping(APIConstant.CREATE_COURSE)
     public ResponseEntity<GenericResponse> createCourse(@RequestBody CourseRequest courseRequest){
         return courseService.createCourse(courseRequest);

@@ -13,4 +13,7 @@ public interface CourseRepository extends JpaRepository<Course, String> {
     @Query("SELECT C.id from Course as C")
     List<String> getAllId();
 
+    @Query("SELECT C from Course as C")
+    List<Course> getAll();
+
 }

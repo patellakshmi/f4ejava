@@ -7,28 +7,28 @@ import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-import java.sql.Timestamp;
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@JsonPropertyOrder({"name","imageUrl","enable","createdAt","updatedAt"})
-public class CoursePlatformResponse {
+@JsonPropertyOrder({"name","description","imageUrl","rank","enable"})
+public class SliderImageResponse {
+
+    @JsonProperty("id")
+    private Long id;
 
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("description")
+    private String description;
+
     @JsonProperty("imageUrl")
-    private Double imageUrl;
+    private String imageUrl;
+
+    @JsonProperty("rank")
+    private Long rank;
 
     @JsonProperty("enable")
     private boolean enable;
-
-    @JsonProperty("createdAt")
-    private Timestamp createdAt;
-
-    @JsonProperty("updatedAt")
-    private Timestamp updatedAt;
-
 }

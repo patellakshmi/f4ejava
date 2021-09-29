@@ -25,6 +25,15 @@ public class Course {
     @Column(name="name")
     private String name;
 
+    @Column(name="head")
+    private String head;
+
+    @Column(name="head_email")
+    private String headEmail;
+
+    @Column(name="head_phone")
+    private String headPhone;
+
     @Column(name="fee")
     private Double fee;
 
@@ -35,7 +44,10 @@ public class Course {
     private Double off;
 
     @Column(name="off_keyword")
-    private String off_keyword;
+    private String offKeyword;
+
+    @Column(name="off_mode")
+    private String offMode;
 
     @Column(name="stream_std")
     private String streamStd;
@@ -79,10 +91,14 @@ public class Course {
     public Course(CourseRequest courseRequest){
         this.id = courseRequest.getId();
         this.name = courseRequest.getName();
+        this.head = courseRequest.getHead();
+        this.headEmail = courseRequest.getHeadEmail();
+        this.headPhone = courseRequest.getHeadPhone();
         this.fee = courseRequest.getFee();
         this.currency = courseRequest.getCurrency();
         this.off = courseRequest.getOff();
-        this.off_keyword = courseRequest.getOff_keyword();
+        this.offKeyword = courseRequest.getOffKeyword();
+        this.offMode = courseRequest.getOffMode();
         this.streamStd = courseRequest.getStreamStd();
         this.duration = courseRequest.getDuration();
         this.durationUnit = courseRequest.getDurationUnit();

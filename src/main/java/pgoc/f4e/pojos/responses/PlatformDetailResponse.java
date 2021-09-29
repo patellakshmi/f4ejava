@@ -3,31 +3,33 @@ package pgoc.f4e.pojos.responses;
 import lombok.Builder;
 import lombok.Data;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
 import java.sql.Timestamp;
 
 @Data
 @Builder
+@JsonPropertyOrder({"courseId","name","imageUrl","courseUrl","enable","createdAt","updatedAt"})
 public class PlatformDetailResponse {
 
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("image_url")
+    @JsonProperty("imageUrl")
     private Double imageUrl;
 
-    @JsonProperty("course_url")
+    @JsonProperty("courseUrl")
     private Double courseUrl;
 
     @JsonProperty("enable")
     private boolean enable;
 
-    @JsonProperty("created_at")
+    @JsonProperty("createdAt")
     private Timestamp createdAt;
 
-    @JsonProperty("updated_at")
+    @JsonProperty("updatedAt")
     private Timestamp updatedAt;
 
-    @JsonProperty("course_id")
+    @JsonProperty("courseId")
     private String courseId;
 }

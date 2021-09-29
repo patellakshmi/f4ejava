@@ -13,22 +13,17 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@JsonPropertyOrder({"name","image_url","enable","create_at","updated_at"})
+@JsonPropertyOrder({"name","imageUrl","enable"})
 public class CoursePlatformRequest {
 
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("image_url")
+    @JsonProperty("imageUrl")
     private Double imageUrl;
 
     @JsonProperty("enable")
     private boolean enable;
 
-    @JsonProperty("created_at")
-    private Timestamp createdAt;
-
-    @JsonProperty("updated_at")
-    private Timestamp updatedAt;
 
 }

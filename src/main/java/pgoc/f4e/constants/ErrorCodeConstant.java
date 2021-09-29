@@ -11,6 +11,9 @@ public class ErrorCodeConstant {
     public static final String FAILED_TO_DELETE_SUBJECT= "Failed to delete subject";
     public static final String FAILED_TO_ADD_SUBJECT_PART= "Failed to add subject";
     public static final String FAILED_TO_DELETE_SUBJECT_PART= "Failed to delete subject part";
+    public static final String FAILED_TO_ADD_PLATFORM_DETAIL= "Failed to add platform detail";
+    public static final String FAILED_TO_DEL_PLATFORM_DETAIL= "Failed to delete platform detail";
+    public static final String FAILED_TO_CREATED_SLIDER= "Failed to create slider image";
 
 
 
@@ -21,7 +24,10 @@ public class ErrorCodeConstant {
         BATCH_ALREADY_ALLOCATED("BATCH_ALREADY_ALLOCATED","Some batches are already allocated for given course"),
         FAILED_TO_CREATE_SUBJECT("FAILED_TO_CREATE_SUBJECT","Failed to add subject"),
         INVALID_SUB_PART_ID("INVALID_SUB_PART_ID","Subject part id must be 3 alpha-num chars"),
-        INVALID_SUB_ID("INVALID_SUB_ID","Subject id must be 3 alpha-num chars");
+        INVALID_SUB_ID("INVALID_SUB_ID","Subject id must be 3 alpha-num chars"),
+        FAILED_TO_ADD_DETAIL("FAILED_TO_ADD_DETAIL","Failed to add platform detail"),
+        FAILED_TO_DEL_DETAIL("FAILED_TO_DEL_DETAIL","Failed to delete platform detail"),
+        FAILED_TO_CREATED_SLIDER("FAILED_TO_CREATED_SLIDER","Failed to create slider image");
 
         public String desc() {
             return desc;

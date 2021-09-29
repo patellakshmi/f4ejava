@@ -13,14 +13,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@JsonPropertyOrder({"id","course_id","name","description","stream_std","year","enable","subjectParts"})
+@JsonPropertyOrder({"id","courseId","name","description","streamDtd","year","enable","subjectParts"})
 public class SubjectRequest {
 
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("course_id")
-    private String course_id;
+    @JsonProperty("courseId")
+    private String courseId;
 
     @JsonProperty("name")
     private String name;
@@ -28,7 +28,7 @@ public class SubjectRequest {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("stream_std")
+    @JsonProperty("streamStd")
     private String streamStd;
 
     @JsonProperty("year")
