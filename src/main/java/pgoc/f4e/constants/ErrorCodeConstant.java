@@ -14,6 +14,7 @@ public class ErrorCodeConstant {
     public static final String FAILED_TO_ADD_PLATFORM_DETAIL= "Failed to add platform detail";
     public static final String FAILED_TO_DEL_PLATFORM_DETAIL= "Failed to delete platform detail";
     public static final String FAILED_TO_CREATED_SLIDER= "Failed to create slider image";
+    public static final String FAILED_TO_CREATED_OBJECTIVE= "Failed to create objective";
 
 
 
@@ -27,7 +28,8 @@ public class ErrorCodeConstant {
         INVALID_SUB_ID("INVALID_SUB_ID","Subject id must be 3 alpha-num chars"),
         FAILED_TO_ADD_DETAIL("FAILED_TO_ADD_DETAIL","Failed to add platform detail"),
         FAILED_TO_DEL_DETAIL("FAILED_TO_DEL_DETAIL","Failed to delete platform detail"),
-        FAILED_TO_CREATED_SLIDER("FAILED_TO_CREATED_SLIDER","Failed to create slider image");
+        FAILED_TO_CREATED_SLIDER("FAILED_TO_CREATED_SLIDER","Failed to create slider image"),
+        FAILED_TO_CREATED_OBJECTIVE("FAILED_TO_CREATED_OBJECTIVE","Failed to create objective");
 
         public String desc() {
             return desc;

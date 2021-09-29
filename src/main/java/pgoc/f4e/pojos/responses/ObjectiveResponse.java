@@ -11,8 +11,8 @@ import org.codehaus.jackson.annotate.JsonPropertyOrder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@JsonPropertyOrder({"name","description","imageUrl","position","enable"})
-public class SliderImageResponse {
+@JsonPropertyOrder({"id","name","description","imageUrl","position","enable"})
+public class ObjectiveResponse {
 
     @JsonProperty("id")
     private Long id;
@@ -20,14 +20,8 @@ public class SliderImageResponse {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("imageUrl")
-    private String imageUrl;
-
-    @JsonProperty("position")
-    private Long position;
+    @JsonProperty("objective")
+    private String objective;
 
     @JsonProperty("enable")
     private boolean enable;

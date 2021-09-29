@@ -26,7 +26,7 @@ public class SliderServiceImpl implements SliderService{
         List<SliderImage> sliderImages = sliderImageRepository.getAllSliders();
         return new ResponseEntity<GenericResponse>(
                 new GenericResponse( Constant.STATUS.SUCCESS.name(),
-                        Constant.COURSE_CREATED,sliderImages ),
+                        Constant.GET_ALL_SLIDER,sliderImages ),
                 HttpStatus.OK);
     }
 

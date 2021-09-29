@@ -4,36 +4,33 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pgoc.f4e.pojos.requests.SliderImageRequest;
+import org.codehaus.jackson.annotate.JsonProperty;
+import pgoc.f4e.pojos.requests.ObjectiveRequest;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+
 @Entity
-@Table(name="slider_image")
+@Table(name="objective")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SliderImage {
+public class Objective {
+
     @Id
     @Column(unique=true, name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="name")
+    @JsonProperty("name")
     private String name;
 
-    @Column(name="description")
-    private String description;
+    @JsonProperty("objective")
+    private String objective;
 
-    @Column(name="image_url")
-    private String imageUrl;
-
-    @Column(name="position")
-    private Long position;
-
-    @Column(name="enable")
+    @JsonProperty("enable")
     private boolean enable;
 
     @Column(name="created_at")
@@ -42,14 +39,11 @@ public class SliderImage {
     @Column(name="updated_at")
     private Timestamp updatedAt;
 
-    public SliderImage(SliderImageRequest sliderImageRequest){
-        this.name = sliderImageRequest.getName();
-        this.description = sliderImageRequest.getDescription();
-        this.imageUrl = sliderImageRequest.getImageUrl();
-        this.position = sliderImageRequest.getPosition();
-        this.enable = sliderImageRequest.isEnable();
+    public Objective(ObjectiveRequest objectiveRequest){
+        this.name = objectiveRequest.getName();
+        this.objective = objectiveRequest.getObjective();
+        this.enable = objectiveRequest.isEnable();
         this.createdAt = new Timestamp(System.currentTimeMillis());
         this.updatedAt = new Timestamp(System.currentTimeMillis());
     }
-
 }

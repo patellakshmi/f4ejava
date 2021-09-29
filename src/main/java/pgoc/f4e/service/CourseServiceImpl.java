@@ -42,7 +42,7 @@ public class CourseServiceImpl implements CourseService{
         List<Course> courses = courseRepository.getAll();
         return new ResponseEntity<GenericResponse>(
                 new GenericResponse( Constant.STATUS.SUCCESS.name(),
-                        Constant.COURSE_CREATED,courses ),
+                        Constant.GET_ALL_COURSE,courses ),
                 HttpStatus.OK);
     }
 

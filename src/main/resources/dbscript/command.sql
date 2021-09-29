@@ -33,15 +33,26 @@ CREATE TABLE prominent_user
 
 CREATE TABLE slider_image
 (
-    id varchar(32) NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     name varchar(64)  NULL,
     description varchar(128)  NULL,
     image_url varchar(512) NULL,
-    rank INT NULL ,
-    enable tinyint(1) default  0 NOT NULL,
+    position INT NULL,
+    enable tinyint(1) default 0 NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY(id),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE objective
+(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(64)  NULL,
+    objective varchar(2048)  NULL,
+    enable tinyint(1) default 0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id)
 );
 
 

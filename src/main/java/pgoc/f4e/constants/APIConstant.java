@@ -20,4 +20,5 @@ public class APIConstant {
     public static final String DELETE_COURSE_SUBJECT= "/f4e/public/v1/course/subject";
 
     public static final String SLIDER_IMAGE= "/f4e/public/v1/slider/image";
+    public static final String OBJECTIVE = "/f4e/public/v1/objective";
 }
