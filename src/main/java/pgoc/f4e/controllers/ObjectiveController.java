@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pgoc.f4e.constants.APIConstant;
-import pgoc.f4e.pojos.requests.CourseRequest;
 import pgoc.f4e.pojos.requests.ObjectiveRequest;
 import pgoc.f4e.pojos.responses.GenericResponse;
 import pgoc.f4e.service.ObjectiveService;

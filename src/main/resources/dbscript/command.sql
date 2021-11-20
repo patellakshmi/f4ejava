@@ -55,6 +55,17 @@ CREATE TABLE objective
     PRIMARY KEY(id)
 );
 
+CREATE TABLE sidebar_button
+(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(64)  NULL,
+    objective varchar(2048)  NULL,
+    enable tinyint(1) default 0 NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id)
+);
+
 
 
 CREATE TABLE course
