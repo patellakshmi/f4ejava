@@ -1,3 +1,5 @@
 mvn clean install -Dmaven.test.skip
 docker build -t patellakshmi/f4e-backend .
 docker push patellakshmi/f4e-backend
+
+

@@ -1,0 +1,23 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: f4e-backend
+  labels:
+    app: f4e-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: f4e-backend
+  template:
+    metadata:
+      labels:
+        app: f4e-backend
+    spec:
+      containers:
+      - name: f4e-backend
+        image: patellakshmi/f4e-backend
+        ports:
+        - containerPort: 6450
+
