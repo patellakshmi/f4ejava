@@ -25,15 +25,18 @@ public class CorsFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        final String origin = "http://localhost:3000";
+        setCorsHeader(response);
+        filterChain.doFilter(request, response);
 
+    }
+
+    void setCorsHeader(HttpServletResponse response){
+        final String origin = "http://www.fight4edu.com";
         response.addHeader("Access-Control-Allow-Origin", origin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers",
                 "content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush");
-
-        filterChain.doFilter(request, response);
 
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import pgoc.f4e.constants.APIConstant;
 
 import javax.servlet.FilterChain;
@@ -27,8 +28,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
+        super();
         this.authenticationManager = authenticationManager;
-        setFilterProcessesUrl(APIConstant.LOGIN);
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(APIConstant.LOGIN,"POST", false));
+        //setFilterProcessesUrl(APIConstant.LOGIN);
     }
 
 
@@ -37,6 +40,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         try {
             AuthUser authUser = new ObjectMapper().readValue(request.getInputStream(), AuthUser.class);
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authUser.getUsername(), authUser.getPassword(), new ArrayList<>()));
+
+            setCorsHeader(response);
             return authentication;
         } catch (IOException e) {
             throw new RuntimeException("Could not read request" + e);
@@ -54,6 +59,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         JSONObject json = new JSONObject();
         json.put(SecurityConfigConst.F4E_AUTH, token);
         response.getOutputStream().write(json.toString().getBytes( StandardCharsets.UTF_8 ) );
+    }
+
+    void setCorsHeader(HttpServletResponse response){
+        final String origin = "http://www.fight4edu.com";
+        response.addHeader("Access-Control-Allow-Origin", origin);
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Headers",
+                "content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush");
+
     }
 
 }
