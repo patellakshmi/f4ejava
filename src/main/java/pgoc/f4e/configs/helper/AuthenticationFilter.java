@@ -31,7 +31,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         super();
         this.authenticationManager = authenticationManager;
         setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(APIConstant.LOGIN,"POST", false));
-        //setFilterProcessesUrl(APIConstant.LOGIN);
     }
 
 
@@ -40,8 +39,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         try {
             AuthUser authUser = new ObjectMapper().readValue(request.getInputStream(), AuthUser.class);
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authUser.getUsername(), authUser.getPassword(), new ArrayList<>()));
-
-            setCorsHeader(response);
             return authentication;
         } catch (IOException e) {
             throw new RuntimeException("Could not read request" + e);
@@ -60,15 +57,4 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         json.put(SecurityConfigConst.F4E_AUTH, token);
         response.getOutputStream().write(json.toString().getBytes( StandardCharsets.UTF_8 ) );
     }
-
-    void setCorsHeader(HttpServletResponse response){
-        final String origin = "http://www.fight4edu.com";
-        response.addHeader("Access-Control-Allow-Origin", origin);
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Headers",
-                "content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush");
-
-    }
-
 }

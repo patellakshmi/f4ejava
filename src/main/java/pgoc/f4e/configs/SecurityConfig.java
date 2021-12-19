@@ -1,12 +1,15 @@
 package pgoc.f4e.configs;
 
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +24,7 @@ import pgoc.f4e.configs.helper.AuthorizationFilter;
 import pgoc.f4e.constants.APIConstant;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 @EnableAutoConfiguration
@@ -28,6 +32,7 @@ import java.util.Arrays;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
+
 
     private static final String[] AUTH_WHITELIST = {
             "/v2/api-docs",
@@ -44,41 +49,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
     }
 
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-
-        httpSecurity.csrf().disable()
-                .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.OPTIONS, APIConstant.LOGIN).permitAll()
-                .antMatchers(HttpMethod.POST, APIConstant.SIGNUP).permitAll()
-                .antMatchers(APIConstant.PUBLIC+"/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, APIConstant.PUBLIC+"/*").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, APIConstant.PRIVATE+"/*").permitAll()
-                .anyRequest().authenticated()
-                .and().addFilter(new AuthenticationFilter(authenticationManager()))
-                .addFilter(new AuthorizationFilter(authenticationManager()))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        httpSecurity.cors().disable();
-
-
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**");
     }
 
-
-
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsService);
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.cors();
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-       /* CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS","PATCH"));
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000","localhost:3000","localhost",
+                "http://www.fight4edu.com", "www.fight4edu.com","fight4edu.com",
+                "http://www.fight4edu.in", "www.fight4edu.in","fight4edu.in",
+                "http://www.fight4edu.org", "www.fight4edu.org","fight4edu.org",
+                "http://www.fightforedu.com","www.fightforedu.com", "fightforedu.com",
+                "http://www.fightforedu.in","www.fightforedu.in", "fightforedu.in",
+                "http://www.fightforedu.org","www.fightforedu.org", "fightforedu.org"
+                ));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);*/
-        return null;
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetailsService);
     }
 
     @Bean
