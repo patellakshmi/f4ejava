@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+root@31.170.165.210
+.DS_Store
+.mvn/
+mvnw
+mvnw.cmd
