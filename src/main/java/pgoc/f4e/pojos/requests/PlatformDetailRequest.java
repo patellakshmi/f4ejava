@@ -1,7 +1,9 @@
 package pgoc.f4e.pojos.requests;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
@@ -10,6 +12,8 @@ import java.sql.Timestamp;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonPropertyOrder({"courseId","name","imageUrl","courseUrl","enable"})
 public class PlatformDetailRequest {
 
