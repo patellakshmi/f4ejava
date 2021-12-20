@@ -55,7 +55,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors();
+
+        httpSecurity.csrf().disable()
+                .authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.OPTIONS, APIConstant.LOGIN).permitAll()
+                .antMatchers(HttpMethod.POST, APIConstant.SIGNUP).permitAll()
+                .antMatchers(APIConstant.PUBLIC+"/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, APIConstant.PUBLIC+"/*").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, APIConstant.PRIVATE+"/*").permitAll()
+                .anyRequest().authenticated()
+                .and().addFilter(new AuthenticationFilter(authenticationManager()))
+                .addFilter(new AuthorizationFilter(authenticationManager()))
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        httpSecurity.cors().disable();
     }
 
     @Bean
